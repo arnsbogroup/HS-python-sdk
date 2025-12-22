@@ -35,7 +35,8 @@ class HeysenderClient:
         self.session.headers.update({
             "Authorization": f"Basic {encoded_credentials}",
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "User-Agent": "HS-python-sdk/0.9"
         })
 
     def _request(self, method: str, endpoint: str, data: Optional[Dict] = None) -> Union[Dict, List]:
