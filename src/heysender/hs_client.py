@@ -414,7 +414,7 @@ class HeysenderClient:
         Returns:
             Response data
         """
-        return self._request("DELETE", f"/api/suppressions/{domain}/bounces/{email}")
+        return self._request("DELETE", f"/api/suppressions/{domain}/bounce/{email}")
 
     # ==================== HELPER METHODS ====================
 
