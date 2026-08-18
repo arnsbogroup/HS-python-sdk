@@ -36,7 +36,7 @@ class HeysenderClient:
             "Authorization": f"Basic {encoded_credentials}",
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "User-Agent": "HS-python-sdk/0.9"
+            "User-Agent": "HS-python-sdk/0.9.1"
         })
 
     def _request(self, method: str, endpoint: str, data: Optional[Dict] = None) -> Union[Dict, List]:
@@ -101,6 +101,18 @@ class HeysenderClient:
             List of domain objects
         """
         return self._request("GET", "/api/domains")
+
+    def get_domain(self, domain: str) -> Dict:
+        """
+        Get a single domain by URL
+
+        Args:
+            domain: Domain name
+
+        Returns:
+            Domain object
+        """
+        return self._request("GET", f"/api/domains/{domain}")
 
     def create_domain(
         self,
@@ -179,6 +191,23 @@ class HeysenderClient:
             List of SMTP users
         """
         return self._request("GET", f"/api/smtp/{domain_id}")
+
+    def get_smtp_user(self, domain_id: int, user_id: int) -> Dict:
+        """
+        Get a single SMTP user by ID
+
+        Note:
+            Unlike get_smtp_users, this response includes a nested "domain"
+            object since the API eager-loads the related domain.
+
+        Args:
+            domain_id: Domain ID
+            user_id: SMTP user ID
+
+        Returns:
+            SMTP user object with nested domain data
+        """
+        return self._request("GET", f"/api/smtp/{domain_id}/{user_id}")
 
     def create_smtp_user(
         self,
